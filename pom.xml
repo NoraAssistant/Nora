@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>NoraAssistant</name>
+    <description>A self-hosted, privacy-focused voice assistant designed to run on lower-end devices.</description>
+    <artifactId>Nora</artifactId>
+    <groupId>org.acadrix</groupId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <developers>
+        <developer>
+            <name>Mason</name>
+            <timezone>Pacific</timezone>
+            <roles>
+                <role>Software Developer</role>
+                <role>Software Architect</role>
+                <role>Software Tester</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <properties>
+        <!-- Existing Properties -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+        <graal.version>22.3.0</graal.version>
+
+        <!-- Other Properties -->
+        <junit.jupiter.version>5.11.2</junit.jupiter.version>
+        <mockito.version>5.14.1</mockito.version>
+        <lombok.version>1.18.22</lombok.version>
+        <git-code-format-maven-plugin.version>5.3</git-code-format-maven-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Unit Testing Dependencies -->
+            <!-- Documentation: https://junit.org/junit5/docs/current/user-guide/ -->
+            <!-- Github: https://github.com/junit-team/junit5 -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Mocking Junit Support -->
+            <!-- Documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/index.html -->
+            <!-- Github: https://github.com/mockito/mockito -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Lombok -->
+            <!-- Documentation: https://projectlombok.org/features/all -->
+            <!-- Github: https://github.com/rzwitserloot/lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.cosium.code</groupId>
+                <artifactId>git-code-format-maven-plugin</artifactId>
+                <version>${git-code-format-maven-plugin.version}</version>
+                <executions>
+                    <!-- On commit, format the modified files -->
+                    <execution>
+                        <id>install-formatter-hook</id>
+                        <goals>
+                            <goal>install-hooks</goal>
+                        </goals>
+                    </execution>
+                    <!-- On Maven verify phase, fail if any file
+                    (including unmodified) is badly formatted -->
+                    <execution>
+                        <id>validate-code-format</id>
+                        <goals>
+                            <goal>validate-code-format</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>format-code</id>
+                        <goals>
+                            <goal>format-code</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.cosium.code</groupId>
+                        <artifactId>google-java-format</artifactId>
+                        <version>${git-code-format-maven-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
